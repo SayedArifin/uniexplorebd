@@ -2,14 +2,13 @@
 import { BiSearchAlt, BiSolidDashboard } from "react-icons/bi";
 import { SiAcclaim } from "react-icons/si";
 import { Button } from "@nextui-org/button";
-import { Image } from "@nextui-org/image";
-import NextImage from "next/image";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import FeaturedUniversity from "./_components/FeaturedUniversity";
 import SigninButton from "./_components/SigninButton";
 import Logo from "@/components/Logo";
 import { userInfo } from "@/action";
+import Image from "next/image";
 const page = async () => {
   const { role } = await userInfo();
   const featuredUniversities = await db.featuredUniversity.findMany()
@@ -53,12 +52,10 @@ const page = async () => {
         </div>
         <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
           <Image
-            as={NextImage}
             width={500}
             height={500}
             src="/images/header.png"
             alt="Hero Image"
-            priority
           />
         </div>
         <div className="fixed bottom-5 right-10 z-[9999]">
