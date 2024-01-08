@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  EDITOR
+  ADVERTIZER
+  OWNER
+}
+
+model User {
+  id        String   @id @default(uuid()) @map("_id")
+  name      String
+  email     String   @unique
+  image     String
+  role      UserRole @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model University {
+  id                  String   @id @default(uuid()) @map("_id")
+  university_name     String
+  yearOfEstablishment Int
+  viceChancellorName  String
+  registrarName       String
+  officialWebsite     String
+  hasLab              Boolean
+  hasPlayground       Boolean
+  hasElectricity      Boolean
+  hasClub             Boolean
+  availableDegrees    String[]
+  emailAddress        String
+  phoneNumber         String
+  faxNumber           String
+  moreInfo            String
+  rank                Int
+  branches            Branch[]
+}
+
+model Department {
+  id        String             @id @default(uuid()) @map("_id")
+  shortName String             @unique
+  fullName  String             @unique
+  branches  DepartmentBranch[]
+}
+
+model Branch {
+  id           String             @id @default(uuid()) @map("_id")
+  name         String
+  address      String
+  helpline     String
+  departments  DepartmentBranch[]
+  University   University?        @relation(fields: [universityId], references: [id], onDelete: Cascade)
+  universityId String?
+}
+
+model DepartmentBranch {
+  id           String     @id @default(uuid()) @map("_id")
+  department   Department @relation(fields: [departmentId], references: [id])
+  departmentId String
+  branch       Branch     @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  branchId     String
+  cost         Float      @default(0)
+  credit       Int        @default(0)
+
+  @@unique([departmentId, branchId])
+}
+
+model FeaturedUniversity {
+  id              String  @id @default(uuid()) @map("_id")
+  university_name String
+  image_url       String
+  href            String?
+}
+
+model carousel {
+  id        String  @id @default(uuid()) @map("_id")
+  title     String
+  image_url String
+  href      String?
+}
