@@ -13,7 +13,6 @@ const FeaturedUniversity: React.FC<FeaturedUniversityProps> = ({ data }) => {
         className="flex items-center lg:justify-center hover:scale-110 transition-transform"
     >
         <Image
-            priority
             width={200}
             height={200}
             src={data.image_url}
