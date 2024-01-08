@@ -1,6 +1,6 @@
-import { Image } from "@nextui-org/image";
+
 import { FeaturedUniversity } from "@prisma/client";
-import NextImage from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 interface FeaturedUniversityProps {
     data: FeaturedUniversity;
@@ -14,7 +14,6 @@ const FeaturedUniversity: React.FC<FeaturedUniversityProps> = ({ data }) => {
     >
         <Image
             priority
-            as={NextImage}
             width={200}
             height={200}
             src={data.image_url}
