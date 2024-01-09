@@ -249,3 +249,12 @@ export const CreateBookmark = async (bookmark_title: string, choosedDepartmentId
         }
     }
 }
+
+export const CreateFeedback = async (email: string, subject: string, msg: string) => {
+    const res = await db.feedback.create({
+        data: {
+            email, subject, msg
+        }
+    })
+    return res
+}

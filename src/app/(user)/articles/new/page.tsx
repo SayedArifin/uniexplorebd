@@ -7,6 +7,9 @@ import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
 const page = async () => {
     const session = await getServerSession(authOptions);
+    if (!session) {
+        redirect("/")
+    }
     const handleSubmit = async (formData: FormData) => {
         "use server"
         const title = formData.get('title') as string;

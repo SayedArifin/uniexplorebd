@@ -110,3 +110,11 @@ model Article {
   author       User     @relation(fields: [authorEmail], references: [email])
   authorEmail  String
 }
+
+model Feedback {
+  id      String  @id @default(uuid()) @map("_id")
+  email   String
+  subject String
+  msg     String
+  marked  Boolean @default(false)
+}
