@@ -28,7 +28,7 @@ const BookmarkCompare: React.FC<BookmarkCompareProps> = ({ selectedUniversityId,
     }
     return <div className="w-full">
         {status === "loading" && <p>Loading please wait...</p>}
-        {status === "unauthenticated" && <p>To save this comparison as bookmark you must be <Button className="text-primary font-extrabold underline" onClick={() => signIn("google")}>Loggedin</Button></p>}
+        {status === "unauthenticated" && <p>To save this comparison as bookmark you must be <Button variant={"link"} className="text-primary font-extrabold underline" onClick={() => signIn("google")}>Loggedin</Button></p>}
         {status === "authenticated" && <>
             {!isSaved && <form action={handleBookmark} className="flex flex-col gap-2 w-full justify-center items-center">
                 <Input label="Enter Bookmark Name" value={bookmark_title} onChange={e => setName(e.target.value)} name="bookmark_name" variant="underlined" placeholder="type a name" isRequired /><SubmitButton text="Bookmark" />

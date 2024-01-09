@@ -38,7 +38,7 @@ const page = async ({ params }: { params: { id: string } }) => {
         'BSC': 'Bachelor',
         'MSC': 'Masters',
     } as { [key: string]: string };
-    console.log(university);
+
     return (
         <Card>
             <CardHeader >

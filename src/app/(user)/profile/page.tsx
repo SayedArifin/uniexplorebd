@@ -9,7 +9,6 @@ import { userDetail } from "@/action";
 
 const page = async () => {
     const details = await userDetail()
-
     if (!details.details) {
         redirect("/")
     }

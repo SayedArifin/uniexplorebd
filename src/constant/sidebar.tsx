@@ -9,7 +9,7 @@ export const EditorSidebarItems = [
     { icon: <BiHome size={25} />, text: "Home", href: "/editor" },
     { icon: <BiLayerPlus size={25} />, text: "Add University", href: "/editor/add_university" },
     { icon: <Plus size={25} />, text: "Department", href: "/editor/department" },
-    { icon: <ImBlog size={25} />, text: "Blogs", href: "/editor/bloags" },
+    { icon: <ImBlog size={25} />, text: "Article", href: "/editor/article" },
 
 ];
 export const AdvertizerSidebarItems = [
@@ -41,8 +41,8 @@ export const siteConfig = {
             href: "/compare",
         },
         {
-            label: "Blog",
-            href: "/blog",
+            label: "articles",
+            href: "/articles",
         },
         {
             label: "About us",
