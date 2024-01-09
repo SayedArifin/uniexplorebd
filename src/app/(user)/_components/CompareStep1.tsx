@@ -19,7 +19,7 @@ const CompareStep1 = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isLoading2, setIsLoading2] = useState(true);
     const [selected, setSelected] = useState([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+
     useEffect(() => {
         const fetchAllDpt = async () => {
             try {

@@ -6,12 +6,10 @@ import Signout from "../_components/Signout";
 import VerifiedBadge from "../_components/VarifiedBadge";
 import { userDetail } from "@/action";
 
-interface pageProps {
-}
 
-const page: React.FC<pageProps> = async () => {
+const page = async () => {
     const details = await userDetail()
-    console.log(details)
+
     if (!details.details) {
         redirect("/")
     }

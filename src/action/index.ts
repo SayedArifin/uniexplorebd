@@ -166,7 +166,10 @@ export const userDetail = async () => {
     const session = await getServerSession(authOptions);
     if (session) {
         details = await db.user.findFirst({
-            where: { email: session?.user?.email as string },
+            where: { email: session?.user?.email as string }, include: {
+                Bookmark: true,
+            },
+
 
         });
     }
@@ -230,4 +233,19 @@ export const CompareUniversity = async (data: any, choosedDpt: string) => {
         },
     });
     return universitiesWithDepartment;
+}
+
+export const CreateBookmark = async (bookmark_title: string, choosedDepartmentId: string, selectedUniversityId: string[], userEmail: string) => {
+    if (bookmark_title && choosedDepartmentId && selectedUniversityId && userEmail) {
+        try {
+            const res = await db.bookmark.create({
+                data: {
+                    userEmail, selectedUniversityId, choosedDepartmentId, bookmark_title
+                }
+            })
+            return res;
+        } catch (error: unknown) {
+            return { error: "Something went wrong" }
+        }
+    }
 }
