@@ -45,7 +45,7 @@ const Navbar = () => {
                 {siteConfig.navItems.map((item: { href: string, label: string }) => (
                     <NavbarMenuItem key={item.href}>
                         <NextLink href={item.href}>
-                            <Link href={"/"}
+                            <Link href={item.href}
                                 className={clsx(
                                     linkStyles({ color: "foreground" }),
                                     "data-[active=true]:text-primary data-[active=true]:font-medium"

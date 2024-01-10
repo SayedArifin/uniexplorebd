@@ -15,7 +15,7 @@ const page = async () => {
   const renderDashboard = (role: any, href: string, text: string) => {
     return role && role === href.split('/')[1].toUpperCase() && (
       <div className="group relative">
-        <Link className="hover:text-red-600" href={href}>
+        <Link className="hover:text-primary" href={href}>
           <BiSolidDashboard size={30} />
         </Link>
         <span className="absolute -top-14 left-[50%] -translate-x-[50%] z-20 origin-left scale-0 px-3 rounded-lg border py-2 text-sm font-bold shadow-md transition-all duration-300 ease-in-out group-hover:scale-100">
@@ -40,13 +40,9 @@ const page = async () => {
             ever for students to find their ideal educational institution.
           </p>
           <div className="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-            <Button variant="shadow" className="w-full bg-primary text-white ">
-              <Link className="flex justify-center items-center" href={"/universities"}><span className="mr-2"><BiSearchAlt /></span>Find University</Link>
 
-            </Button>
-            <Button variant="ghost" className="w-full shadow-lg text-primary border-primary hover:bg-primary">
-              <Link className="flex justify-center items-center" href={"/compare"}><span className="mr-2"><SiAcclaim /></span>Compare</Link>
-            </Button>
+            <Link href={""} className="w-full justify-center bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"><span className="mr-2"><SiAcclaim /></span>Find university</Link>
+            <Link className="w-full justify-center text-white bg-primary hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2" href={"/compare"}><span className="mr-2"><SiAcclaim /></span>Compare</Link>
             <SigninButton />
           </div>
         </div>
