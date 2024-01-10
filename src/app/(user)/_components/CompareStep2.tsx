@@ -47,7 +47,7 @@ const CompareStep2: React.FC<CompareStep2Props> = ({ choosedDp, selected }) => {
 
     const fetchData = async () => {
         setData([])
-        const res = await CompareUniversity(selected, choosedDp);
+        const res = await CompareUniversity(choosedDp, selected);
         const filteredData = res.flatMap((university) =>
             university.branches.flatMap((branch) =>
                 branch.departments.map((department) => ({

@@ -13,7 +13,9 @@ const Page = async ({ searchParams }: { searchParams: { search: string, depertme
     const universities = await db.university.findMany({
         select: {
             id: true, university_name: true, rank: true, availableDegrees: true
-        }
+        }, orderBy: {
+            rank: 'asc',
+        },
     });
     const carousels = await db.carousel.findMany()
     const search = searchParams.search || "";

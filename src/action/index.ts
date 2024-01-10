@@ -3,6 +3,13 @@ import { db } from "@/lib/db";
 import { Branch, DepartmentBranch, Prisma, University, User, UserRole } from "@prisma/client";
 import { Session } from "next-auth";
 import { authOptions } from "@/app/option";
+interface UserInfo {
+    session: Session | null;
+    role: {
+        role: string | null;
+    } | null;
+}
+
 export const userRole = async (email?: string | null | undefined) => {
     if (email) {
         const roleData = await db.user.findFirst({
@@ -137,12 +144,6 @@ import { getServerSession } from "next-auth";
 
 
 
-interface UserInfo {
-    session: Session | null;
-    role: {
-        role: string | null;
-    } | null;
-}
 
 export const userInfo = async (): Promise<UserInfo> => {
     let role = null;
@@ -208,8 +209,10 @@ export const universitiesWithDepartmentId = async (id: string) => {
     return universitiesWithDepartmentId;
 };
 
-export const CompareUniversity = async (data: any, choosedDpt: string) => {
+export const CompareUniversity = async (choosedDpt: string, data: any) => {
+
     const universityIds = data.map((university: any) => university.value);
+
     const universitiesWithDepartment = await db.university.findMany({
 
         where: {
@@ -257,4 +260,78 @@ export const CreateFeedback = async (email: string, subject: string, msg: string
         }
     })
     return res
+}
+
+export const deleteArticle = async (id: string) => {
+    const res = await db.article.delete({
+        where: {
+            id
+        }
+    })
+    return res
+}
+export const deleteBookmark = async (id: string) => {
+    const res = await db.bookmark.delete({
+        where: {
+            id
+        }
+    })
+    return res
+}
+export const VisibilityBookmark = async (id: string, is_visible: boolean) => {
+    const res = await db.bookmark.update({
+        where: {
+            id
+        }, data: {
+            is_visible
+        }
+    })
+    return res
+}
+
+export const fetchArticle = async (id: string) => {
+    const res = await db.article.findUnique({
+        where: {
+            id
+        }
+    })
+    return res
+}
+
+export const updateArticle = async (id: string, title: string, introduction: string, imageUrl: string, content: string) => {
+    const res = await db.article.update({
+        where: {
+            id
+        }, data: {
+            title, introduction, imageUrl, content
+        }
+    })
+    return res;
+}
+
+export const CompareUniversityShow = async (choosedDpt: string, ids: string[]) => {
+
+    const universitiesWithDepartment = await db.university.findMany({
+
+        where: {
+            id: {
+                in: ids,
+            },
+        },
+        include: {
+            branches: {
+                include: {
+                    departments: {
+                        where: {
+                            departmentId: choosedDpt,
+                        },
+                        include: {
+                            department: true,
+                        },
+                    },
+                },
+            },
+        },
+    });
+    return universitiesWithDepartment;
 }

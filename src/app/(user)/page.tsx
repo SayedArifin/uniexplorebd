@@ -1,7 +1,7 @@
 
 import { BiSearchAlt, BiSolidDashboard } from "react-icons/bi";
 import { SiAcclaim } from "react-icons/si";
-import { Button } from "@nextui-org/button";
+
 import Link from "next/link";
 import { db } from "@/lib/db";
 import FeaturedUniversity from "./_components/FeaturedUniversity";
@@ -41,7 +41,7 @@ const page = async () => {
           </p>
           <div className="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
 
-            <Link href={""} className="w-full justify-center bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"><span className="mr-2"><SiAcclaim /></span>Find university</Link>
+            <Link href={"/universities"} className="w-full justify-center bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"><span className="mr-2"><BiSearchAlt /></span>Find university</Link>
             <Link className="w-full justify-center text-white bg-primary hover:bg-[#3b5998]/90 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#3b5998]/55 me-2 mb-2" href={"/compare"}><span className="mr-2"><SiAcclaim /></span>Compare</Link>
             <SigninButton />
           </div>

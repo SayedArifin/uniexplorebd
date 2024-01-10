@@ -2,7 +2,7 @@
 import { useFormStatus } from "react-dom";
 import { Button } from "./ui/button";
 interface SubmitButtonProps {
-    text: string;
+    text: any;
     className?: string;
 }
 
