@@ -96,7 +96,7 @@ function Barchart() {
                                     >
                                         <div className="shadow-xs rounded-lg bg-primary p-2">
                                             <div className="flex items-center justify-between text-sm text-white">
-                                                <div>Sales:</div>
+                                                <div>Branch Count:</div>
                                                 <div className="font-bold ml-2">
                                                     <span dangerouslySetInnerHTML={{ __html: tooltipContent }}></span>
                                                 </div>

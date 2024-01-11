@@ -80,7 +80,7 @@ const OwnerSidebar: React.FC<SidebarProps> = ({ children, sidebarItems }) => {
                                 <BiMenuAltLeft size={25} className='mr-2' />
                             </button>
                             <div className="font-extrabold text-inherit text-2xl flex">
-                                <Logo /><span className="text-xs text-primary-600 hidden md:block">OWNER-{data?.user?.name}</span>
+                                <Logo /><span className="text-xs text-primary-600 hidden md:block">Owner-{data?.user?.name}</span>
                             </div>
                         </div>
                         <div className="flex items-center">

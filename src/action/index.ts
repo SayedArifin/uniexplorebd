@@ -1,6 +1,6 @@
 "use server"
 import { db } from "@/lib/db";
-import { Branch, DepartmentBranch, Prisma, University, User, UserRole } from "@prisma/client";
+import { Branch, DepartmentBranch, Prisma, Recommendation, University, User, UserRole } from "@prisma/client";
 import { Session } from "next-auth";
 import { authOptions } from "@/app/option";
 interface UserInfo {
@@ -347,4 +347,23 @@ export const barChart = async () => {
     allDpt.sort((a, b) => b.branches.length - a.branches.length);
     const top10Dpt = allDpt.slice(0, 10);
     return top10Dpt;
+}
+
+export const ReviewUniversity = async (userEmail: string, universityId: string, recommendation: Recommendation, comment: string) => {
+    const res = await db.review.create({
+        data: {
+            userEmail, universityId, recommendation, comment
+        }
+    })
+    return res
+
+}
+
+export const handleDelete = async (id: string) => {
+    const res = await db.review.delete({
+        where: {
+            id
+        }
+    })
+    return res
 }
