@@ -3,6 +3,7 @@ import { ImBlog } from "react-icons/im";
 import { BiLayerPlus } from "react-icons/bi";
 import { BiHome } from "react-icons/bi";
 import { Plus, User } from "lucide-react";
+import { MdFeedback } from "react-icons/md";
 
 
 export const EditorSidebarItems = [
@@ -21,6 +22,7 @@ export const AdvertizerSidebarItems = [
 export const OwnerSidebarItems = [
     { icon: <BiHome size={25} />, text: "Home", href: "/owner" },
     { icon: <User size={25} />, text: "User", href: "/owner/user" },
+    { icon: <MdFeedback size={25} />, text: "Feedback", href: "/owner/feedback" }
 
 ];
 

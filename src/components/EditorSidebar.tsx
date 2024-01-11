@@ -35,7 +35,7 @@ const EditorSidebar: React.FC<SidebarProps> = ({ children, sidebarItems }) => {
                     const fetchedRole = await userRole(data.user?.email);
                     setRole(fetchedRole);
 
-                    if (fetchedRole !== "EDITOR") {
+                    if (fetchedRole !== "EDITOR" && fetchedRole !== "OWNER") {
                         toast.warning("Access Denied", {
                             description: "Oops! It seems like you don't have the necessary permissions to view this page. Please contact your administrator for assistance."
                         });
@@ -61,7 +61,7 @@ const EditorSidebar: React.FC<SidebarProps> = ({ children, sidebarItems }) => {
         return <div>Loading...</div>;
     }
 
-    if (!role || role !== "EDITOR") {
+    if (!role || role !== "EDITOR" && role !== "OWNER") {
         return null;
     }
 
@@ -80,7 +80,7 @@ const EditorSidebar: React.FC<SidebarProps> = ({ children, sidebarItems }) => {
                                 <BiMenuAltLeft size={25} className='mr-2' />
                             </button>
                             <div className="font-extrabold text-inherit text-2xl flex">
-                                <Logo /><span className="text-xs text-primary-600">Editor-{data?.user?.name}</span>
+                                <Logo /><span className="text-xs text-primary-600 hidden md:block">Editor-{data?.user?.name}</span>
                             </div>
                         </div>
                         <div className="flex items-center">

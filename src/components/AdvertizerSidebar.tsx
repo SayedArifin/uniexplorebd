@@ -34,7 +34,7 @@ const AdvertizerSidebar: React.FC<SidebarProps> = ({ children, sidebarItems }) =
                     const role = await userRole(data.user?.email);
                     setRole(role);
 
-                    if (role !== "ADVERTIZER") {
+                    if (role !== "ADVERTIZER" && role !== "OWNER") {
                         toast.warning("Access Denied", {
                             description: "Oops! It seems like you don't have the necessary permissions to view this page. Please contact your Advertizeristrator for assistance."
                         });
@@ -101,7 +101,7 @@ const AdvertizerSidebar: React.FC<SidebarProps> = ({ children, sidebarItems }) =
                                 <BiMenuAltLeft size={25} className='mr-2' />
                             </button>
                             <div className="font-extrabold text-inherit text-2xl flex">
-                                <Logo /><span className="text-xs text-red-600">Advertizer-{data?.user?.name}</span>
+                                <Logo /><span className="text-xs text-primary hidden md:block">Advertizer-{data?.user?.name}</span>
                             </div>
                         </div>
                         <div className="flex items-center">

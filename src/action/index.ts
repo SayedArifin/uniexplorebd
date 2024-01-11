@@ -335,3 +335,16 @@ export const CompareUniversityShow = async (choosedDpt: string, ids: string[]) =
     });
     return universitiesWithDepartment;
 }
+
+export const barChart = async () => {
+    const allDpt = await db.department.findMany({
+        include: {
+
+            branches: true,
+        },
+    });
+
+    allDpt.sort((a, b) => b.branches.length - a.branches.length);
+    const top10Dpt = allDpt.slice(0, 10);
+    return top10Dpt;
+}

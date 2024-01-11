@@ -81,13 +81,15 @@ const ViewModify: React.FC<ViewModifyProps> = ({ university }) => {
 
         try {
             const res = await undateUniversity(university.id, data);
+            router.refresh();
+            setIsEditing(false);
         } catch (error) {
             console.log(error)
         }
     };
 
     return (<>
-        <div className="w-full flex gap-5 ">
+        <div className="w-full flex flex-col gap-2 mb-2 ">
             <Button onClick={() => setIsEditing(!isEditing)} variant={"destructive"}>{isEditing ? "cancel" : "Edit"}</Button>
             {!isEditing && <AddBranch id={university.id} />}
         </div>

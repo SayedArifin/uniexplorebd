@@ -32,7 +32,7 @@ const page: React.FC<pageProps> = async ({ params }) => {
         }
     });
     return <Card>
-        <CardHeader>
+        <CardHeader className="flex justify-center items-center">
             <CardTitle>
                 {university?.university_name}
             </CardTitle>

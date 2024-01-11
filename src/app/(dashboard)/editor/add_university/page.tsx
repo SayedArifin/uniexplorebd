@@ -36,6 +36,7 @@ const page = () => {
                 data
             })
             redirect("/editor/" + res.id)
+
         } else {
             console.log("problem creating")
         }
@@ -96,11 +97,7 @@ const page = () => {
                         </li>
 
                     </ul>
-                    <h4 className="mb-4 font-semibold text-gray-900 dark:text-white">Aditional Information(multiple select):</h4>
-                    <RadioBool id="hasLab" label="Lab Facilities Available" />
-                    <RadioBool id="hasPlayground" label="Proper Playground Onsite" />
-                    <RadioBool id="hasElectricity" label="Electricity Supply Available" />
-                    <RadioBool id="hasClub" label="Club Facilities Offered" />
+
                     <div className="grid w-full gap-1.5">
                         <Label htmlFor="moreInfo">Aditional Information:</Label>
                         <MarkdownEditor />
