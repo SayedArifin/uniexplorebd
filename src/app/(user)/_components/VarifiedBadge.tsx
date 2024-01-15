@@ -16,7 +16,7 @@ const VerifiedBadge: React.FC<VerifiedBadgeProps> = ({ role, username }) => {
     } else if (role === "OWNER") {
         content = "Owner"
     }
-    console.log(role === "EDITOR")
+
 
     return (
         <div className="flex gap-1 justify-center items-center">

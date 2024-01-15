@@ -84,16 +84,16 @@ const CompareStep2: React.FC<CompareStep2Props> = ({ choosedDp, selected }) => {
     }, [data]);
 
     return (
-        <Dialog>
+        <Dialog >
             <DialogTrigger asChild>
                 <Button className="w-full mt-5" onClick={fetchData} disabled={selected.length < 2}>Compare Now</Button>
             </DialogTrigger>
-            <DialogContent className="md:min-w-fit">
+            <DialogContent className="md:min-w-fit max-h-FULL">
                 <DialogHeader className='flex flex-col justify-center items-center'>
                     <DialogTitle><Logo /></DialogTitle>
                     <DialogDescription>Compare University in a minute</DialogDescription>
                 </DialogHeader>
-                <Card className='overflow-scroll md:overflow-x-hidden'>
+                <Card className='overflow-scroll md:overflow-x-hidden  '>
 
                     <CardContent>
                         <div className="">

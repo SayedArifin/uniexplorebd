@@ -13,9 +13,7 @@ export const authOptions = {
             if (account.provider === "google" && user.email) {
                 try {
                     await db.user.upsert({
-                        where: {
-                            email: user.email,
-                        },
+                        where: { email: user.email, },
                         create: {
                             email: user.email,
                             name: user.name,
@@ -25,14 +23,10 @@ export const authOptions = {
                             image: user.image,
                         }
                     })
-
-
-
                 } catch (error) {
                     throw new Error("Something went wrong. Please try again");
                 }
             }
-
             return user;
         },
     },

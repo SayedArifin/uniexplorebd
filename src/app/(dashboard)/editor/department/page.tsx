@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import AddDpt from "../../_components/AddDpt";
 import { Button } from "@/components/ui/button";
 import { BsFillTrashFill } from "react-icons/bs";
-import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 
 const page = async () => {
@@ -24,7 +24,7 @@ const page = async () => {
                     id: dptId
                 }
             })
-            redirect("editor/department")
+            revalidatePath("editor/department")
         } catch (error) {
             console.log(error);
             throw new Error("Something went wrong")
