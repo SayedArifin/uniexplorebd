@@ -1,13 +1,14 @@
 "use client"
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
+import { Input } from "@nextui-org/react";
+
 
 interface InputWLabelProps {
     label: string | number;
     type?: string;
     name: string;
     placeholder?: string;
-    value?: string | number;
+    value?: any;
     disabled?: boolean;
     onchange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -23,16 +24,18 @@ const InputWLabel: React.FC<InputWLabelProps> = ({
 }) => {
     return (
         <div className="flex flex-col w-full gap-1.5">
-            <Label htmlFor={name}>{label}:</Label>
+
             <Input
-                disabled={disabled}
+                label={label}
+                variant="underlined"
+                isDisabled={disabled}
                 value={value}
                 type={type ? type : "text"}
                 name={name}
                 id={name}
                 placeholder={placeholder ? placeholder : "Please Enter " + label}
                 onChange={onchange}
-                required
+                isRequired
             />
         </div>
     );
