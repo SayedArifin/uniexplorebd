@@ -109,12 +109,12 @@ const page = () => {
                         />
                         <div className="text-gray-500 sm:text-lg dark:text-gray-400">
                             <h2 className="mb-4 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-                                Welcome to UniExplore-
+                                Welcome toUniversityFinder
                                 <span className="text-primary-primary">BD</span>° - Your Path to
                                 Higher Education
                             </h2>
                             <p className="mb-8 font-light lg:text-xl">
-                                UniExplore-<span className="text-primary-primary">BD</span>° is your
+                                UniversityFinder<span className="text-primary-primary">BD</span>° is your
                                 go-to platform for simplifying the process of selecting the
                                 right university for your future academic journey in Bangladesh.
                                 Say goodbye to the complexities of the application process and
@@ -213,7 +213,7 @@ const page = () => {
                             </ul>
                             <p className="font-light lg:text-xl">
                                 Simplify your journey to higher education in Bangladesh with
-                                UniExplore-<span className="text-primary-primary">BD</span>°. and
+                                UniversityFinder<span className="text-primary-primary">BD</span>°. and
                                 make the dream of studying at the perfect university a reality.
                             </p>
                         </div>
