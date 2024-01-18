@@ -27,7 +27,7 @@ export const OwnerSidebarItems = [
 ];
 
 export const siteConfig = {
-    name: "UniExplore-BD",
+    name: "UniversityFinder-BD",
     description: "Find & Shortlist university in a minute.",
     navItems: [
         {
