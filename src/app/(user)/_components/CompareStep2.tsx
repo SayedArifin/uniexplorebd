@@ -4,33 +4,25 @@ import {
     TableBody,
     TableCaption,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+import { Card, CardContent } from "@/components/ui/card";
 import { CompareUniversity } from "@/action";
 import Logo from '@/components/Logo';
 import Extra from "./Extra";
 import BookmarkCompare from './BookmarkCompare';
-
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalProps, Button, useDisclosure } from "@nextui-org/react";
 interface CompareStep2Props {
     choosedDp: string;
     selected: any;
 }
 
 const CompareStep2: React.FC<CompareStep2Props> = ({ choosedDp, selected }) => {
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [scrollBehavior, setScrollBehavior] = useState<ModalProps["scrollBehavior"]>("inside");
     const [data, setData] = useState<{
         university_name: string;
         department_shortName: string;
@@ -84,57 +76,69 @@ const CompareStep2: React.FC<CompareStep2Props> = ({ choosedDp, selected }) => {
     }, [data]);
 
     return (
-        <Dialog >
-            <DialogTrigger asChild>
-                <Button className="w-full mt-5" onClick={fetchData} disabled={selected.length < 2}>Compare Now</Button>
-            </DialogTrigger>
-            <DialogContent className="md:min-w-fit max-h-FULL">
-                <DialogHeader className='flex flex-col justify-center items-center'>
-                    <DialogTitle><Logo /></DialogTitle>
-                    <DialogDescription>Compare University in a minute</DialogDescription>
-                </DialogHeader>
-                <Card className='overflow-scroll md:overflow-x-hidden  '>
+        <div className="flex flex-wrap gap-3 w-full">
+            <Button className='w-full bg-primary text-white mt-5' variant="solid" onClick={fetchData} onPress={onOpen} isDisabled={selected.length < 2}>Compare Now</Button>
 
-                    <CardContent>
-                        <div className="">
-                            <Table className=''>
-                                <TableCaption>Comparing Based on {data[0]?.department_shortName}</TableCaption>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead scope="col">University Name</TableHead>
-                                        <TableHead scope="col">Branch</TableHead>
-                                        <TableHead scope="col">Total Cost</TableHead>
-                                        <TableHead scope="col">Credit</TableHead>
-                                        <TableHead scope="col">Infrastructure at a Glance</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {Object.values(uniqueUniversities).map((entry, index) => (
-                                        <TableRow key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                            <TableCell>{entry.university_name}</TableCell>
-                                            <TableCell>{entry.branch_name}</TableCell>
-                                            <TableCell>{entry.cost} BDT</TableCell>
-                                            <TableCell>{entry.credit}</TableCell>
-                                            <TableCell>
-                                                <div className="flex gap-2">
-                                                    <Extra has={entry.hasLab} label={"Lab"} />
-                                                    <Extra has={entry.hasClub} label={"Club"} />
-                                                    <Extra has={entry.hasPlayground} label={"Playground"} />
-                                                    <Extra has={entry.hasElectricity} label={"Electricity"} />
-                                                </div>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </div>
-                    </CardContent>
-                </Card>
-                <DialogFooter>
-                    <BookmarkCompare choosedDepartmentId={choosedDp} selectedUniversityId={selected.map((item: { value: string; }) => item.value)} />
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
+            <Modal
+                size='5xl'
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                scrollBehavior={scrollBehavior}
+            >
+                <ModalContent>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1 justify-center items-center">
+                                <Logo />
+                                <p className='text-xs'>Compare University in a minute</p>
+                            </ModalHeader>
+                            <ModalBody>
+                                <Card className=' '>
+
+                                    <CardContent>
+                                        <div className="">
+                                            <Table className=''>
+                                                <TableCaption>Comparing Based on {data[0]?.department_shortName}</TableCaption>
+                                                <TableHeader>
+                                                    <TableRow>
+                                                        <TableHead scope="col">University Name</TableHead>
+                                                        <TableHead scope="col">Branch</TableHead>
+                                                        <TableHead scope="col">Total Cost</TableHead>
+                                                        <TableHead scope="col">Credit</TableHead>
+                                                        <TableHead scope="col">Infrastructure at a Glance</TableHead>
+                                                    </TableRow>
+                                                </TableHeader>
+                                                <TableBody>
+                                                    {Object.values(uniqueUniversities).map((entry, index) => (
+                                                        <TableRow key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                            <TableCell>{entry.university_name}</TableCell>
+                                                            <TableCell>{entry.branch_name}</TableCell>
+                                                            <TableCell>{entry.cost} BDT</TableCell>
+                                                            <TableCell>{entry.credit}</TableCell>
+                                                            <TableCell>
+                                                                <div className="flex gap-2">
+                                                                    <Extra has={entry.hasLab} label={"Lab"} />
+                                                                    <Extra has={entry.hasClub} label={"Club"} />
+                                                                    <Extra has={entry.hasPlayground} label={"Playground"} />
+                                                                    <Extra has={entry.hasElectricity} label={"Electricity"} />
+                                                                </div>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    ))}
+                                                </TableBody>
+                                            </Table>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </ModalBody>
+                            <ModalFooter>
+                                <BookmarkCompare choosedDepartmentId={choosedDp} selectedUniversityId={selected.map((item: { value: string; }) => item.value)} />
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
+        </div>
     );
 };
 

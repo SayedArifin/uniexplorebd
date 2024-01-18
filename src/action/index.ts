@@ -226,6 +226,8 @@ export const CompareUniversity = async (choosedDpt: string, data: any) => {
                     departments: {
                         where: {
                             departmentId: choosedDpt,
+                        }, orderBy: {
+                            cost: "asc"
                         },
                         include: {
                             department: true,
