@@ -30,7 +30,6 @@ export function AddBranch({ id }: { id: string }) {
     useEffect(() => {
         const fetch = async () => {
             const dpts = await fetchDpt();
-
             setDpts(dpts);
         };
         fetch();

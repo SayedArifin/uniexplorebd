@@ -61,7 +61,10 @@ export const makeBatch = async (data: any) => {
                 create: selected.map((dpt: any) => ({
                     department: { connect: { id: dpt.value } },
                     cost: 0,
-                    credit: 0,
+                    internship_opportunities: "UNAVAILABLE",
+                    campus_size: "SMALL",
+                    research_facilities: "POOR",
+                    qualification: ["MASTERS"]
                 })),
             },
         },

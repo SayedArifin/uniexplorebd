@@ -38,13 +38,8 @@ const ViewModify: React.FC<ViewModifyProps> = ({ university }) => {
     const [phoneNumber, setPhoneNumber] = useState(university?.phoneNumber);
     const [faxNumber, setFaxNumber] = useState(university?.faxNumber);
     const [moreInfo, setMoreInfo] = useState(university?.moreInfo);
-
     const [availableDegrees, setAvailableDegrees] = useState(university?.availableDegrees || []);
 
-    const [hasLab, setHasLab] = useState(university?.hasLab);
-    const [hasPlayground, setHasPlayground] = useState(university?.hasPlayground);
-    const [hasElectricity, setHasElectricity] = useState(university?.hasElectricity);
-    const [hasClub, setHasClub] = useState(university?.hasClub);
     const router = useRouter()
     const handleCheckboxChange = (degree: string) => {
         setAvailableDegrees((prevDegrees: string[]) => {
@@ -72,10 +67,6 @@ const ViewModify: React.FC<ViewModifyProps> = ({ university }) => {
             emailAddress,
             phoneNumber,
             faxNumber,
-            hasLab,
-            hasPlayground,
-            hasElectricity,
-            hasClub,
             moreInfo,
         } as University;
 
@@ -182,10 +173,14 @@ const ViewModify: React.FC<ViewModifyProps> = ({ university }) => {
                                         <TableCaption>Tution fee with available departments.</TableCaption>
                                         <TableHeader>
                                             <TableRow>
-                                                <TableHead >Department</TableHead>
-                                                <TableHead>Total Cost</TableHead>
-                                                <TableHead>Credit</TableHead>
-                                                <TableHead >Action</TableHead>
+                                                <TableHead scope="col">Name</TableHead>
+                                                <TableHead scope="col">Tuition Fee</TableHead>
+                                                <TableHead scope="col">Minimum GPA <span className='text-xs '>(HSC+SSC)</span> </TableHead>
+                                                <TableHead scope="col">Acceptance</TableHead>
+                                                <TableHead scope="col">Internship Opportunities</TableHead>
+                                                <TableHead scope="col">Head&apos;s Qualification</TableHead>
+                                                <TableHead scope="col">Campus Size</TableHead>
+                                                <TableHead scope="col">Research Facilities</TableHead>
                                             </TableRow>
                                         </TableHeader>
                                         <TableBody>
@@ -193,8 +188,22 @@ const ViewModify: React.FC<ViewModifyProps> = ({ university }) => {
                                                 <TableRow key={dpt.id}>
                                                     <TableCell className="font-medium">{dpt.department.shortName}</TableCell>
                                                     <TableCell>{dpt.cost} BDT</TableCell>
-                                                    <TableCell>{dpt.credit}</TableCell>
-                                                    <TableCell><ModifyTutionFee id={dpt.id} cost={dpt.cost} credit={dpt.credit} dpt={dpt.department.shortName} /></TableCell>
+                                                    <TableCell>{dpt.min_gpa}</TableCell>
+                                                    <TableCell>
+                                                        {dpt.acceptance}%
+                                                    </TableCell><TableCell>
+                                                        {dpt.internship_opportunities}
+                                                    </TableCell><TableCell>
+                                                        {dpt.qualification.map((q: any) => (
+                                                            <p className="mr-1" key={q}>{q}</p>
+                                                        ))}
+                                                    </TableCell><TableCell>
+                                                        {dpt.campus_size}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {dpt.research_facilities}
+                                                    </TableCell>
+                                                    <TableCell><ModifyTutionFee department={dpt} dpt={dpt.department.shortName} /></TableCell>
 
                                                 </TableRow>
                                             ))}
@@ -210,25 +219,7 @@ const ViewModify: React.FC<ViewModifyProps> = ({ university }) => {
 
                 </CardContent>
             </Card>}
-            <Card>
-                <CardHeader>
-                    <h1 className="font-bold">
-                        Additional Information(multiple select):
-                    </h1>
-                </CardHeader>
-                <CardContent>
-                    <RadioBool
-                        id="hasLab"
-                        label="Lab Facilities Available"
-                        checked={hasLab}
-                        onChange={() => setHasLab(!hasLab)}
-                        disabled={!isEditing}
-                    />
-                    <RadioBool disabled={!isEditing} id="hasPlayground" label="Proper Playground Onsite" checked={hasPlayground} onChange={() => setHasPlayground(!hasPlayground)} />
-                    <RadioBool disabled={!isEditing} id="hasElectricity" label="Electricity Supply Available" checked={hasElectricity} onChange={() => setHasElectricity(!hasElectricity)} />
-                    <RadioBool disabled={!isEditing} id="hasClub" label="Club Facilities Offered" checked={hasClub} onChange={() => setHasClub(!hasClub)} />
-                </CardContent>
-            </Card>
+
             <Card>
                 <CardHeader>
                     <CardTitle className="font-bold text-4xl">

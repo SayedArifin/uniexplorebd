@@ -7,6 +7,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ResearchFacilities {
+  ADVANCED
+  WELL_MAINTAINED
+  SATISFACTORY
+  BELOW_AVERAGE
+  POOR
+}
+
+enum InternshipOpportunities {
+  AVAILABLE
+  LIMITED
+  OCCASIONAL
+  RARE
+  UNAVAILABLE
+}
+
 enum UserRole {
   USER
   EDITOR
@@ -17,6 +33,22 @@ enum UserRole {
 enum Recommendation {
   RECOMMENDED
   NOT_RECOMMENDED
+}
+
+enum CampusSize {
+  LARGE
+  MEDIUM
+  SMALL
+}
+
+enum Qualification {
+  PHD
+  MD
+  JD
+  ENGD
+  DBA
+  EDU
+  MASTERS
 }
 
 model User {
@@ -39,10 +71,6 @@ model University {
   viceChancellorName  String
   registrarName       String
   officialWebsite     String
-  hasLab              Boolean
-  hasPlayground       Boolean
-  hasElectricity      Boolean
-  hasClub             Boolean
   availableDegrees    String[]
   emailAddress        String
   phoneNumber         String
@@ -71,13 +99,18 @@ model Branch {
 }
 
 model DepartmentBranch {
-  id           String     @id @default(uuid()) @map("_id")
-  department   Department @relation(fields: [departmentId], references: [id])
-  departmentId String
-  branch       Branch     @relation(fields: [branchId], references: [id], onDelete: Cascade)
-  branchId     String
-  cost         Float      @default(0)
-  credit       Int        @default(0)
+  id                       String                  @id @default(uuid()) @map("_id")
+  department               Department              @relation(fields: [departmentId], references: [id])
+  departmentId             String
+  branch                   Branch                  @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  branchId                 String
+  cost                     Float                   @default(0)
+  min_gpa                  Int                     @default(5)
+  acceptance               Int                     @default(0)
+  internship_opportunities InternshipOpportunities
+  campus_size              CampusSize
+  research_facilities      ResearchFacilities
+  qualification            Qualification[]
 
   @@unique([departmentId, branchId])
 }

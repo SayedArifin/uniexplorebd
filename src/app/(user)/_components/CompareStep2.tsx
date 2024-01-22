@@ -15,6 +15,7 @@ import Logo from '@/components/Logo';
 import Extra from "./Extra";
 import BookmarkCompare from './BookmarkCompare';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalProps, Button, useDisclosure } from "@nextui-org/react";
+import { CampusSize, InternshipOpportunities, Qualification, ResearchFacilities } from '@prisma/client';
 interface CompareStep2Props {
     choosedDp: string;
     selected: any;
@@ -28,59 +29,51 @@ const CompareStep2: React.FC<CompareStep2Props> = ({ choosedDp, selected }) => {
         department_shortName: string;
         branch_name: string;
         cost: number;
-        credit: number;
-        hasClub: boolean;
-        hasLab: boolean;
-        hasPlayground: boolean;
-        hasElectricity: boolean;
+        gpa: number;
+        acceptance: number;
+        internship_opportunities: InternshipOpportunities;
+        qualification: Qualification;
+        campus_size: CampusSize;
+        research_facilities: ResearchFacilities;
+
     }[]>([]);
-
-    const [uniqueUniversities, setUniqueUniversities] = useState<{ [key: string]: any }>({});
-
     const fetchData = async () => {
-        setData([])
+        setData([]);
         const res = await CompareUniversity(choosedDp, selected);
-        const filteredData = res.flatMap((university) =>
-            university.branches.flatMap((branch) =>
-                branch.departments.map((department) => ({
-                    university_name: university.university_name,
-                    department_shortName: department.department.shortName,
-                    branch_name: branch.name,
-                    cost: department.cost,
-                    credit: department.credit,
-                    hasClub: university.hasClub,
-                    hasLab: university.hasLab,
-                    hasPlayground: university.hasPlayground,
-                    hasElectricity: university.hasElectricity,
-                }))
-            )
-        );
-        setData(filteredData);
-    };
+        const uniqueUniversityDataMap: { [key: string]: typeof data[0] } = {};
 
-
-
-
-
-    useEffect(() => {
-        const updatedUniqueUniversities: { [key: string]: any } = {};
-        data?.forEach(entry => {
-            const key = entry.university_name + entry.department_shortName;
-            if (!updatedUniqueUniversities[key]) {
-                updatedUniqueUniversities[key] = { ...entry };
-            } else {
-                updatedUniqueUniversities[key].branch_name += `, ${entry.branch_name}`;
-            }
+        res.forEach((university) => {
+            university.branches.forEach((branch) => {
+                branch.departments.forEach((department) => {
+                    const universityKey = university.university_name;
+                    if (!uniqueUniversityDataMap[universityKey]) {
+                        uniqueUniversityDataMap[universityKey] = {
+                            university_name: university.university_name,
+                            department_shortName: department.department.shortName,
+                            branch_name: branch.name,
+                            cost: department.cost,
+                            gpa: department.min_gpa,
+                            acceptance: department.acceptance,
+                            internship_opportunities: department.internship_opportunities,
+                            qualification: department.qualification[0],
+                            campus_size: department.campus_size,
+                            research_facilities: department.research_facilities
+                        };
+                    }
+                });
+            });
         });
-        setUniqueUniversities(updatedUniqueUniversities);
-    }, [data]);
+
+        const uniqueUniversityData = Object.values(uniqueUniversityDataMap);
+        setData(uniqueUniversityData);
+    };
 
     return (
         <div className="flex flex-wrap gap-3 w-full">
             <Button className='w-full bg-primary text-white mt-5' variant="solid" onClick={fetchData} onPress={onOpen} isDisabled={selected.length < 2}>Compare Now</Button>
 
             <Modal
-                size='5xl'
+                size="5xl"
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
                 scrollBehavior={scrollBehavior}
@@ -101,27 +94,34 @@ const CompareStep2: React.FC<CompareStep2Props> = ({ choosedDp, selected }) => {
                                                 <TableCaption>Comparing Based on {data[0]?.department_shortName}</TableCaption>
                                                 <TableHeader>
                                                     <TableRow>
-                                                        <TableHead scope="col">University Name</TableHead>
-                                                        <TableHead scope="col">Branch</TableHead>
-                                                        <TableHead scope="col">Total Cost</TableHead>
-                                                        <TableHead scope="col">Credit</TableHead>
-                                                        <TableHead scope="col">Infrastructure at a Glance</TableHead>
+                                                        <TableHead scope="col">Name</TableHead>
+                                                        <TableHead scope="col">Tuition Fee</TableHead>
+                                                        <TableHead scope="col">Minimum GPA <span className='text-xs '>(HSC+SSC)</span> </TableHead>
+                                                        <TableHead scope="col">Acceptance</TableHead>
+                                                        <TableHead scope="col">Internship Opportunities</TableHead>
+                                                        <TableHead scope="col">Head&apos;s Qualification</TableHead>
+                                                        <TableHead scope="col">Campus Size</TableHead>
+                                                        <TableHead scope="col">Research Facilities</TableHead>
                                                     </TableRow>
                                                 </TableHeader>
+
                                                 <TableBody>
-                                                    {Object.values(uniqueUniversities).map((entry, index) => (
+                                                    {data.map((entry, index) => (
                                                         <TableRow key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                             <TableCell>{entry.university_name}</TableCell>
-                                                            <TableCell>{entry.branch_name}</TableCell>
                                                             <TableCell>{entry.cost} BDT</TableCell>
-                                                            <TableCell>{entry.credit}</TableCell>
+                                                            <TableCell>{entry.gpa}</TableCell>
                                                             <TableCell>
-                                                                <div className="flex gap-2">
-                                                                    <Extra has={entry.hasLab} label={"Lab"} />
-                                                                    <Extra has={entry.hasClub} label={"Club"} />
-                                                                    <Extra has={entry.hasPlayground} label={"Playground"} />
-                                                                    <Extra has={entry.hasElectricity} label={"Electricity"} />
-                                                                </div>
+                                                                {entry.acceptance}
+                                                            </TableCell><TableCell>
+                                                                {entry.internship_opportunities}
+                                                            </TableCell><TableCell>
+                                                                {entry.qualification}
+                                                            </TableCell><TableCell>
+                                                                {entry.campus_size}
+                                                            </TableCell>
+                                                            <TableCell>
+                                                                {entry.research_facilities}
                                                             </TableCell>
                                                         </TableRow>
                                                     ))}

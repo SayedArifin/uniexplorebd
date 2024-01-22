@@ -23,12 +23,8 @@ const page = () => {
         const phoneNumber = formData.get("phoneNumber") as string;
         const faxNumber = formData.get("faxNumber") as string;
         const availableDegrees = [formData.get("BSC"), formData.get("MSC")].filter(value => value !== null) as string[];
-        const hasClub = formData.get("hasClub") === "true" ? true : false as boolean;
-        const hasElectricity = formData.get("hasElectricity") === "true" ? true : false as boolean;
-        const hasPlayground = formData.get("hasPlayground") === "true" ? true : false as boolean;
-        const hasLab = formData.get("hasLab") === "true" ? true : false as boolean;
         const moreInfo = formData.get("moreInfo") as string;
-        const data = { university_name, rank, yearOfEstablishment, viceChancellorName, registrarName, officialWebsite, emailAddress, phoneNumber, faxNumber, availableDegrees, hasClub, hasElectricity, hasPlayground, hasLab, moreInfo }
+        const data = { university_name, rank, yearOfEstablishment, viceChancellorName, registrarName, officialWebsite, emailAddress, phoneNumber, faxNumber, availableDegrees, moreInfo }
 
 
         if (university_name && rank && yearOfEstablishment && viceChancellorName && registrarName && officialWebsite && emailAddress && phoneNumber && faxNumber && availableDegrees && moreInfo) {

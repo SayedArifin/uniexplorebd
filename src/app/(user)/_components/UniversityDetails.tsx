@@ -140,9 +140,14 @@ const UniversityDetails = async ({ id }: { id: string }) => {
                                     <TableCaption>Tution fee with available departments.</TableCaption>
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead >Department</TableHead>
-                                            <TableHead>Total Cost</TableHead>
-                                            <TableHead>Credit</TableHead>
+                                            <TableHead scope="col">Name</TableHead>
+                                            <TableHead scope="col">Tuition Fee</TableHead>
+                                            <TableHead scope="col">Minimum GPA <span className='text-xs '>(HSC+SSC)</span> </TableHead>
+                                            <TableHead scope="col">Acceptance</TableHead>
+                                            <TableHead scope="col">Internship Opportunities</TableHead>
+                                            <TableHead scope="col">Head&apos;s Qualification</TableHead>
+                                            <TableHead scope="col">Campus Size</TableHead>
+                                            <TableHead scope="col">Research Facilities</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
@@ -150,11 +155,28 @@ const UniversityDetails = async ({ id }: { id: string }) => {
                                             <TableRow key={dpt.id}>
                                                 <TableCell className="font-medium">{dpt.department.shortName}</TableCell>
                                                 <TableCell>{dpt.cost} BDT</TableCell>
-                                                <TableCell>{dpt.credit}</TableCell>
+                                                <TableCell>{dpt.min_gpa}</TableCell>
+                                                <TableCell>
+                                                    {dpt.acceptance}%
+                                                </TableCell><TableCell>
+                                                    {dpt.internship_opportunities}
+                                                </TableCell><TableCell>
+                                                    {dpt.qualification.map((q: any) => (
+                                                        <p className="mr-1" key={q}>{q}</p>
+                                                    ))}
+                                                </TableCell><TableCell>
+                                                    {dpt.campus_size}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {dpt.research_facilities}
+                                                </TableCell>
+
+
                                             </TableRow>
                                         ))}
                                     </TableBody>
                                     <TableFooter>
+
                                     </TableFooter>
                                 </Table>
 
@@ -167,24 +189,7 @@ const UniversityDetails = async ({ id }: { id: string }) => {
                         <CardTitle className="text-primary">More Information</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <ul className="max-w-md space-y-1 text-gray-500 list-inside dark:text-gray-400">
-                            <li className={cn("flex gap-1 items-center", university?.hasLab ? "text-green-700" : "text-red-700")}>
-                                {university?.hasLab ? <MdOutlineVerified /> : <BiMessageSquareX />}
-                                Lab Facilities Available
-                            </li>
-                            <li className={cn("flex gap-1 items-center", university?.hasPlayground ? "text-green-700" : "text-red-700")}>
-                                {university?.hasPlayground ? <MdOutlineVerified /> : <BiMessageSquareX />}
-                                Proper Playground Onsite
-                            </li>
-                            <li className={cn("flex gap-1 items-center", university?.hasElectricity ? "text-green-700" : "text-red-700")}>
-                                {university?.hasElectricity ? <MdOutlineVerified /> : <BiMessageSquareX />}
-                                Electricity Supply Available
-                            </li>
-                            <li className={cn("flex gap-1 items-center", university?.hasClub ? "text-green-700" : "text-red-700")}>
-                                {university?.hasClub ? <MdOutlineVerified /> : <BiMessageSquareX />}
-                                Club Facilities Offered
-                            </li>
-                        </ul>
+
                         <div className='prose bg-white rounded-md p-5 mt-5 min-w-full'>
                             <ReactMarkdown>{university?.moreInfo}</ReactMarkdown>
                         </div>
