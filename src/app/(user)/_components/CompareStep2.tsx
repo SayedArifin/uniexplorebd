@@ -16,6 +16,7 @@ import Extra from "./Extra";
 import BookmarkCompare from './BookmarkCompare';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalProps, Button, useDisclosure } from "@nextui-org/react";
 import { CampusSize, InternshipOpportunities, Qualification, ResearchFacilities } from '@prisma/client';
+
 interface CompareStep2Props {
     choosedDp: string;
     selected: any;
@@ -37,6 +38,13 @@ const CompareStep2: React.FC<CompareStep2Props> = ({ choosedDp, selected }) => {
         research_facilities: ResearchFacilities;
 
     }[]>([]);
+    const [filters, setFilters] = useState({
+        campusSize: "",
+        internshipOpportunities: "",
+        qualification: "",
+        researchFacilities: "",
+    });
+
     const fetchData = async () => {
         setData([]);
         const res = await CompareUniversity(choosedDp, selected);
@@ -64,12 +72,86 @@ const CompareStep2: React.FC<CompareStep2Props> = ({ choosedDp, selected }) => {
             });
         });
 
-        const uniqueUniversityData = Object.values(uniqueUniversityDataMap);
+        const uniqueUniversityData = Object.values(uniqueUniversityDataMap).filter(
+            (entry) => {
+                return (
+                    (!filters.campusSize || entry.campus_size === filters.campusSize) &&
+                    (!filters.internshipOpportunities ||
+                        entry.internship_opportunities === filters.internshipOpportunities) &&
+                    (!filters.qualification || entry.qualification === filters.qualification) &&
+                    (!filters.researchFacilities ||
+                        entry.research_facilities === filters.researchFacilities)
+                );
+            }
+        );
+
         setData(uniqueUniversityData);
     };
 
     return (
         <div className="flex flex-wrap gap-3 w-full">
+            <div className="flex gap-3">
+                <label>Campus Size:</label>
+                <select
+                    value={filters.campusSize}
+                    onChange={(e) =>
+                        setFilters({ ...filters, campusSize: e.target.value })
+                    }
+                >
+                    <option value="">All</option>
+                    <option value={CampusSize.LARGE}>Large</option>
+                    <option value={CampusSize.MEDIUM}>Medium</option>
+                    <option value={CampusSize.SMALL}>Small</option>
+                </select>
+
+                <label>Internship Opportunities:</label>
+                <select
+                    value={filters.internshipOpportunities}
+                    onChange={(e) =>
+                        setFilters({ ...filters, internshipOpportunities: e.target.value })
+                    }
+                >
+                    <option value="">All</option>
+                    <option value={InternshipOpportunities.AVAILABLE}>Available</option>
+                    <option value={InternshipOpportunities.LIMITED}>Limited</option>
+                    <option value={InternshipOpportunities.OCCASIONAL}>Occasional</option>
+                    <option value={InternshipOpportunities.RARE}>Rare</option>
+                    <option value={InternshipOpportunities.UNAVAILABLE}>Unavailable</option>
+                </select>
+
+                <label>Qualification:</label>
+                <select
+                    value={filters.qualification}
+                    onChange={(e) =>
+                        setFilters({ ...filters, qualification: e.target.value })
+                    }
+                >
+                    <option value="">All</option>
+                    <option value={Qualification.PHD}>PhD</option>
+                    <option value={Qualification.MD}>MD</option>
+                    <option value={Qualification.JD}>JD</option>
+                    <option value={Qualification.ENGD}>ENGD</option>
+                    <option value={Qualification.DBA}>DBA</option>
+                    <option value={Qualification.EDU}>EDU</option>
+                    <option value={Qualification.MASTERS}>Masters</option>
+                </select>
+
+                <label>Research Facilities:</label>
+                <select
+                    value={filters.researchFacilities}
+                    onChange={(e) =>
+                        setFilters({ ...filters, researchFacilities: e.target.value })
+                    }
+                >
+                    <option value="">All</option>
+                    <option value={ResearchFacilities.ADVANCED}>Advanced</option>
+                    <option value={ResearchFacilities.WELL_MAINTAINED}>Well Maintained</option>
+                    <option value={ResearchFacilities.SATISFACTORY}>Satisfactory</option>
+                    <option value={ResearchFacilities.BELOW_AVERAGE}>Below Average</option>
+                    <option value={ResearchFacilities.POOR}>Poor</option>
+                </select>
+            </div>
+
             <Button className='w-full bg-primary text-white mt-5' variant="solid" onClick={fetchData} onPress={onOpen} isDisabled={selected.length < 2}>Compare Now</Button>
 
             <Modal
