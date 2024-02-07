@@ -35,7 +35,7 @@ const AddDpt = () => {
                 <Separator className="my-4" />
             </CardHeader>
             <CardContent>
-                <form className="flex flex-col gap-2 w-full" action={addDpt}>
+                <form className="flex flex-col gap-2 w-full" action={addDpt} key={""}>
                     <InputWLabel label="Short Name" name="shortName" placeholder="eg: CSE" />
                     <InputWLabel label="Full Name" name="fullName" placeholder="eg: Computer Science Engineering" />
                     <SubmitButton text="Add Department" />

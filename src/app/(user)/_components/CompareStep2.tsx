@@ -36,8 +36,9 @@ const CompareStep2: React.FC<CompareStep2Props> = ({ choosedDp, selected }) => {
         qualification: Qualification;
         campus_size: CampusSize;
         research_facilities: ResearchFacilities;
-
     }[]>([]);
+    const [loading, setLoading] = useState(false);
+    const [noUniversitiesFound, setNoUniversitiesFound] = useState(false);
     const [filters, setFilters] = useState({
         campusSize: "",
         internshipOpportunities: "",
@@ -46,6 +47,7 @@ const CompareStep2: React.FC<CompareStep2Props> = ({ choosedDp, selected }) => {
     });
 
     const fetchData = async () => {
+        setLoading(true);
         setData([]);
         const res = await CompareUniversity(choosedDp, selected);
         const uniqueUniversityDataMap: { [key: string]: typeof data[0] } = {};
@@ -85,7 +87,13 @@ const CompareStep2: React.FC<CompareStep2Props> = ({ choosedDp, selected }) => {
             }
         );
 
-        setData(uniqueUniversityData);
+        setLoading(false);
+        if (uniqueUniversityData.length === 0) {
+            setNoUniversitiesFound(true);
+        } else {
+            setData(uniqueUniversityData);
+            setNoUniversitiesFound(false);
+        }
     };
 
     return (
@@ -169,47 +177,56 @@ const CompareStep2: React.FC<CompareStep2Props> = ({ choosedDp, selected }) => {
                             </ModalHeader>
                             <ModalBody>
                                 <Card className=' '>
-
                                     <CardContent>
-                                        <div className="">
-                                            <Table className=''>
-                                                <TableCaption>Comparing Based on {data[0]?.department_shortName}</TableCaption>
-                                                <TableHeader>
-                                                    <TableRow>
-                                                        <TableHead scope="col">Name</TableHead>
-                                                        <TableHead scope="col">Tuition Fee</TableHead>
-                                                        <TableHead scope="col">Minimum GPA <span className='text-xs '>(HSC+SSC)</span> </TableHead>
-                                                        <TableHead scope="col">Acceptance</TableHead>
-                                                        <TableHead scope="col">Internship Opportunities</TableHead>
-                                                        <TableHead scope="col">Head&apos;s Qualification</TableHead>
-                                                        <TableHead scope="col">Campus Size</TableHead>
-                                                        <TableHead scope="col">Research Facilities</TableHead>
-                                                    </TableRow>
-                                                </TableHeader>
+                                        {loading ? (
 
-                                                <TableBody>
-                                                    {data.map((entry, index) => (
-                                                        <TableRow key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                                            <TableCell>{entry.university_name}</TableCell>
-                                                            <TableCell>{entry.cost} BDT</TableCell>
-                                                            <TableCell>{entry.gpa}</TableCell>
-                                                            <TableCell>
-                                                                {entry.acceptance}
-                                                            </TableCell><TableCell>
-                                                                {entry.internship_opportunities}
-                                                            </TableCell><TableCell>
-                                                                {entry.qualification}
-                                                            </TableCell><TableCell>
-                                                                {entry.campus_size}
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                {entry.research_facilities}
-                                                            </TableCell>
+                                            <div role="status" className="max-w-sm animate-pulse">
+                                                <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+                                                <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5"></div>
+                                                <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+                                                <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-2.5"></div>
+                                                <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-2.5"></div>
+                                                <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
+                                                <span className="sr-only">Loading...</span>
+                                            </div>
+
+
+                                        ) : noUniversitiesFound ? (
+                                            <p>No universities found based on the selected filters.</p>
+                                        ) : (
+                                            <div className="">
+                                                <Table className=''>
+                                                    <TableCaption>Comparing Based on {data[0]?.department_shortName}</TableCaption>
+                                                    <TableHeader>
+                                                        <TableRow>
+                                                            <TableHead scope="col">Name</TableHead>
+                                                            <TableHead scope="col">Tuition Fee</TableHead>
+                                                            <TableHead scope="col">Minimum GPA <span className='text-xs '>(HSC+SSC)</span> </TableHead>
+                                                            <TableHead scope="col">Acceptance</TableHead>
+                                                            <TableHead scope="col">Internship Opportunities</TableHead>
+                                                            <TableHead scope="col">Head&apos;s Qualification</TableHead>
+                                                            <TableHead scope="col">Campus Size</TableHead>
+                                                            <TableHead scope="col">Research Facilities</TableHead>
                                                         </TableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                        </div>
+                                                    </TableHeader>
+
+                                                    <TableBody>
+                                                        {data.map((entry, index) => (
+                                                            <TableRow key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                                <TableCell>{entry.university_name}</TableCell>
+                                                                <TableCell>{entry.cost} BDT</TableCell>
+                                                                <TableCell>{entry.gpa}</TableCell>
+                                                                <TableCell>{entry.acceptance}</TableCell>
+                                                                <TableCell>{entry.internship_opportunities}</TableCell>
+                                                                <TableCell>{entry.qualification}</TableCell>
+                                                                <TableCell>{entry.campus_size}</TableCell>
+                                                                <TableCell>{entry.research_facilities}</TableCell>
+                                                            </TableRow>
+                                                        ))}
+                                                    </TableBody>
+                                                </Table>
+                                            </div>
+                                        )}
                                     </CardContent>
                                 </Card>
                             </ModalBody>

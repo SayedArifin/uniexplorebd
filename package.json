@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.1.0",
     "@mui/styled-engine-sc": "^6.0.0-alpha.12",
     "@nextui-org/react": "^2.2.9",
     "@prisma/client": "^5.7.1",
@@ -20,6 +21,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "@react-pdf/renderer": "^3.3.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "embla-carousel-autoplay": "^8.0.0-rc19",
@@ -36,6 +38,7 @@
     "react-loading-skeleton": "^3.3.1",
     "react-markdown": "^9.0.1",
     "react-multi-select-component": "^4.3.4",
+    "react-pdf": "^7.7.0",
     "rehype-parse": "^9.0.0",
     "rehype-stringify": "^10.0.0",
     "remark-html": "^16.0.1",
