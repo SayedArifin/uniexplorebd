@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button, Input, Select, SelectItem, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow, Textarea } from '@nextui-org/react';
 import { Label } from '@/components/ui/label';
 import { MinusCircle, PlusCircle } from 'lucide-react';
-
+import emailjs from '@emailjs/browser'
+import { toast } from 'sonner';
 interface Education {
     name: string;
     year: string;
@@ -384,9 +385,23 @@ const CVBuilder: React.FC = () => {
 
         setIsComplete(isAllFieldsFilled);
     }, [firstName, lastName, dob, fatherName, motherName, permanentAddress, presentAddress, religion, about, education, universityName, universityAddress, eiin, position, joiningYear, engSpeaking, engWriting, banSpeaking, banWriting, loginEmail, supportingEmail, phoneNumber]);
-    const sendEmail = () => {
+    const templateParams = {
 
+        to_email: [loginEmail, supportingEmail],
+    };
+    const sendEmail = async () => {
+        try {
+            await emailjs.send("service_qwy3r2c", "template_1pq3exr", templateParams, {
+                publicKey: "WOdvkPI7BHSRkPWCr",
+
+            })
+            toast.success("Email sent")
+        } catch (error) {
+            toast.error("Error sending")
+            console.log(error)
+        }
     }
+
     return (
         <div className="container  mx-auto p-4">
             <form>
