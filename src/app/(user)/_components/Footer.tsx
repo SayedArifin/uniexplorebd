@@ -16,6 +16,9 @@ const Footer: React.FC<footerProps> = () => {
                             <Logo />
                         </Link>
                     </div>
+                    <li className="mb-4">
+                        <Link href="/promote" target="_blank" className="hover:underline">Promote Your University</Link>
+                    </li>
                     <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
                         <div>
                             <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">UseFull Links</h2>
@@ -38,6 +41,7 @@ const Footer: React.FC<footerProps> = () => {
                                 <li>
                                     <Link target="_blank" href="/representative/" className="hover:underline">Manage University</Link>
                                 </li>
+
                             </ul>
                         </div>
                         <div>

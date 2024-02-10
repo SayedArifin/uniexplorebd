@@ -12,7 +12,7 @@ export const metadata = {
 const Page = async ({ searchParams }: { searchParams: { search: string, depertment: string } }) => {
     const universities = await db.university.findMany({
         select: {
-            id: true, university_name: true, rank: true, availableDegrees: true
+            id: true, university_name: true, rank: true, availableDegrees: true, hasRepresentative: true,
         }, orderBy: {
             rank: 'asc',
         },

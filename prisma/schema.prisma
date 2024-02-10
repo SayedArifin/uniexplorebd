@@ -30,6 +30,16 @@ enum UserRole {
   OWNER
 }
 
+enum AdType {
+  BANNER
+  CAROUSEL
+}
+
+enum AdStatus {
+  PAID
+  UNPAID
+}
+
 enum Recommendation {
   RECOMMENDED
   NOT_RECOMMENDED
@@ -65,10 +75,11 @@ model User {
 }
 
 model University {
-  id                  String   @id @default(uuid()) @map("_id")
+  id                  String          @id @default(uuid()) @map("_id")
   university_name     String
   yearOfEstablishment Int
   viceChancellorName  String
+  hasRepresentative   Boolean         @default(false)
   registrarName       String
   officialWebsite     String
   availableDegrees    String[]
@@ -79,6 +90,7 @@ model University {
   rank                Int
   branches            Branch[]
   Reviews             Review[]
+  Representative      Representative?
 }
 
 model Department {
@@ -170,4 +182,12 @@ model Feedback {
   subject String
   msg     String
   marked  Boolean @default(false)
+}
+
+model Representative {
+  id              String     @id @default(uuid()) @map("_id")
+  universityId    String     @unique
+  university      University @relation(fields: [universityId], references: [id])
+  loggedinEmail   String
+  supportingEmail String
 }

@@ -1,5 +1,5 @@
-import { BiMessageSquareX } from "react-icons/bi";
-import { MdOutlineVerified } from "react-icons/md";
+import { BiChat, BiMessageSquareX } from "react-icons/bi";
+import { MdOutlineVerified, MdVerified } from "react-icons/md";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { db } from "@/lib/db";
 import ReactMarkdown from 'react-markdown';
@@ -8,13 +8,14 @@ import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, Tabl
 import { cn } from "@/lib/utils";
 import ShowcaseLabel from "./ShowCaseLabel";
 import Image from "next/image";
-import { Radio, RadioGroup, Textarea } from "@nextui-org/react";
+import { Button, Radio, RadioGroup, Textarea } from "@nextui-org/react";
 import UniversityComment from "./UniversityComment";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/option";
 import VerifiedBadge from "./VarifiedBadge";
-import { Trash2 } from "lucide-react";
+import { MessageCircleQuestionIcon, Trash2 } from "lucide-react";
 import DeleteComment from "./DeleteComment";
+import { BsQuestionOctagonFill } from "react-icons/bs";
 const UniversityDetails = async ({ id }: { id: string }) => {
     const session = await getServerSession(authOptions);
 
@@ -23,6 +24,7 @@ const UniversityDetails = async ({ id }: { id: string }) => {
             id
         },
         include: {
+            Representative: true,
             branches: {
                 include: {
                     departments: {
@@ -57,8 +59,8 @@ const UniversityDetails = async ({ id }: { id: string }) => {
     return (
         <Card>
             <CardHeader >
-                <CardTitle className="text-2xl font-extrabold  text-primary">
-                    {university?.university_name}
+                <CardTitle className="text-2xl font-extrabold  text-primary flex items-center gap-2">
+                    {university?.university_name}{university?.Representative && <MdVerified />}
                 </CardTitle>
             </CardHeader>
             <CardContent className="flex flex-col gap-5">
@@ -230,6 +232,11 @@ const UniversityDetails = async ({ id }: { id: string }) => {
                         </div>
                     </CardContent>
                 </Card>
+                <div className="fixed bottom-4 right-4">
+                    <Button className="flex justify-center items-center gap-2">
+                        <MessageCircleQuestionIcon /> Ask University
+                    </Button>
+                </div>
             </CardContent>
         </Card>
     )

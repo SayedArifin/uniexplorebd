@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { MinusCircle, PlusCircle } from 'lucide-react';
 import emailjs from '@emailjs/browser'
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 interface Education {
     name: string;
     year: string;
@@ -352,7 +353,7 @@ const CVBuilder: React.FC = () => {
         "C1 - Advanced",
         "C2 - Proficiency"
     ];
-
+    const router = useRouter()
     const [isClient, setIsClient] = useState<boolean>(false);
     useEffect(() => {
         setIsClient(true);
@@ -388,14 +389,17 @@ const CVBuilder: React.FC = () => {
     const templateParams = {
 
         to_email: [loginEmail, supportingEmail],
+        name: firstName + " " + lastName,
+        mobile: phoneNumber
     };
     const sendEmail = async () => {
         try {
-            await emailjs.send("service_qwy3r2c", "template_1pq3exr", templateParams, {
-                publicKey: "WOdvkPI7BHSRkPWCr",
+            await emailjs.send(process.env.NEXT_PUBLIC_SERVICE_ID!, process.env.NEXT_PUBLIC_TEMPLATE!, templateParams, {
+                publicKey: process.env.NEXT_PUBLIC_PUBLIC_KEY!,
 
             })
-            toast.success("Email sent")
+            toast.success("Email sent suuccessfully")
+            router.push("/success")
         } catch (error) {
             toast.error("Error sending")
             console.log(error)
