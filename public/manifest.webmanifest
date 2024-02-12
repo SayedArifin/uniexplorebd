@@ -1,0 +1,32 @@
+{
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "browser",
+    "scope": "/",
+    "start_url": "/",
+    "description": "Welcome to UniExplore-BD, your ultimate destination for comprehensive information on private universities in Bangladesh. Our platform is designed to empower students with the knowledge they need to make informed decisions about their higher education journey.  At UniExplore-BD, students can access detailed profiles of various private universities across Bangladesh. From academic programs and faculty information to campus facilities and extracurricular opportunities, we provide an extensive overview of each institution to help you understand what they have to offer.  But that's not all. Our unique shortlisting and comparison features allow students to easily narrow down their options and evaluate different universities side by side. Whether you're considering multiple institutions or weighing the pros and cons of specific programs, UniExplore-BD makes it effortless to compare key factors and find the perfect fit for your academic and career aspirations.  With UniExplore-BD, you can embark on your university se",
+    "name": "UniExplore-BD",
+    "short_name": "UniExplore-BD",
+    "icons": [
+        {
+            "src": "/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

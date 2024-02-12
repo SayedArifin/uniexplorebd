@@ -1,5 +1,5 @@
-import { BiChat, BiMessageSquareX } from "react-icons/bi";
-import { MdOutlineVerified, MdVerified } from "react-icons/md";
+
+import { MdVerified } from "react-icons/md";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { db } from "@/lib/db";
 import ReactMarkdown from 'react-markdown';
@@ -8,14 +8,11 @@ import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, Tabl
 import { cn } from "@/lib/utils";
 import ShowcaseLabel from "./ShowCaseLabel";
 import Image from "next/image";
-import { Button, Radio, RadioGroup, Textarea, Tooltip } from "@nextui-org/react";
 import UniversityComment from "./UniversityComment";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/option";
 import VerifiedBadge from "./VarifiedBadge";
-import { MessageCircleQuestionIcon, Trash2 } from "lucide-react";
 import DeleteComment from "./DeleteComment";
-import { BsQuestionOctagonFill } from "react-icons/bs";
 import Qna from "./Qna";
 const UniversityDetails = async ({ id }: { id: string }) => {
     const session = await getServerSession(authOptions);
