@@ -8,6 +8,7 @@ const josfin = Josefin_Sans({ subsets: ["latin"], weight: "700" });
 export const metadata: Metadata = {
   title: 'UniExplore-BD',
   description: 'university shortlisting website',
+  manifest: "/manifest.webmanifest"
 }
 
 export default function RootLayout({
