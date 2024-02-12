@@ -1,16 +1,17 @@
 import { db } from "@/lib/db";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ViewModify from "@/app/(dashboard)/_components/ViewModify";
-import RepresentativeSidebar from "./RepresentativeSidebar";
-import { RepresentativeSidebarItems } from "@/constant/sidebar";
-interface EditUniversityProps {
-  id: string;
-}
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/option";
 
-const EditUniversity: React.FC<EditUniversityProps> = async ({ id }) => {
-  const university = await db.university.findUnique({
+
+const EditUniversity = async () => {
+  const session = await getServerSession(authOptions)
+  const university = await db.university.findFirstOrThrow({
     where: {
-      id
+      Representative: {
+        loggedinEmail: session?.user?.email || "Unauthorized",
+      }
     },
     include: {
       branches: {
@@ -33,18 +34,17 @@ const EditUniversity: React.FC<EditUniversityProps> = async ({ id }) => {
       }
     }
   });
-  return <RepresentativeSidebar sidebarItems={RepresentativeSidebarItems}>
-    <Card>
-      <CardHeader className="flex justify-center items-center">
-        <CardTitle>
-          {university?.university_name}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ViewModify university={university} />
-      </CardContent>
-    </Card>
-  </RepresentativeSidebar>;
+  return <Card>
+    <CardHeader className="flex justify-center items-center">
+      <CardTitle>
+        {university?.university_name}
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <ViewModify university={university} />
+    </CardContent>
+  </Card>
+
 };
 
 export default EditUniversity;

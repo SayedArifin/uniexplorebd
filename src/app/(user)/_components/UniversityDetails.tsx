@@ -8,7 +8,7 @@ import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, Tabl
 import { cn } from "@/lib/utils";
 import ShowcaseLabel from "./ShowCaseLabel";
 import Image from "next/image";
-import { Button, Radio, RadioGroup, Textarea } from "@nextui-org/react";
+import { Button, Radio, RadioGroup, Textarea, Tooltip } from "@nextui-org/react";
 import UniversityComment from "./UniversityComment";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/option";
@@ -16,6 +16,7 @@ import VerifiedBadge from "./VarifiedBadge";
 import { MessageCircleQuestionIcon, Trash2 } from "lucide-react";
 import DeleteComment from "./DeleteComment";
 import { BsQuestionOctagonFill } from "react-icons/bs";
+import Qna from "./Qna";
 const UniversityDetails = async ({ id }: { id: string }) => {
     const session = await getServerSession(authOptions);
 
@@ -24,6 +25,11 @@ const UniversityDetails = async ({ id }: { id: string }) => {
             id
         },
         include: {
+            question: {
+                where: {
+                    userEmail: session?.user?.email || "un authicanted"
+                }
+            },
             Representative: true,
             branches: {
                 include: {
@@ -232,11 +238,9 @@ const UniversityDetails = async ({ id }: { id: string }) => {
                         </div>
                     </CardContent>
                 </Card>
-                <div className="fixed bottom-4 right-4">
-                    <Button className="flex justify-center items-center gap-2">
-                        <MessageCircleQuestionIcon /> Ask University
-                    </Button>
-                </div>
+                {university?.Representative && (<div className="fixed bottom-4 right-4">
+                    <Qna representative={university.Representative} universityName={university.university_name} name={session?.user?.name || ""} pic={session?.user?.image} universityId={id} question={university.question} email={session?.user?.email} />
+                </div>)}
             </CardContent>
         </Card>
     )

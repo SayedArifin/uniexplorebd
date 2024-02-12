@@ -441,7 +441,8 @@ export const fetchUniversity = async () => {
 export const addRepresentative = async (
   universityId: string,
   loggedinEmail: string,
-  supportingEmail: string
+  supportingEmail: string,
+  university_logo: string
 ) => {
   await db.university.update({
     where: {
@@ -457,6 +458,7 @@ export const addRepresentative = async (
       loggedinEmail,
       supportingEmail,
       universityId,
+      university_logo,
     },
   });
   return res;
@@ -478,4 +480,30 @@ export const deleteRepresentation = async (id: string) => {
     },
   });
   return res;
+};
+
+export const createQuestion = async (
+  q: string,
+  userEmail: string,
+  universityId: string
+) => {
+  const res = await db.question.create({
+    data: {
+      question: q,
+      userEmail,
+      universityId,
+    },
+  });
+  return res;
+};
+
+export const createAnswer = async (id: string, answer: string) => {
+  const res = await db.question.update({
+    where: {
+      id,
+    },
+    data: {
+      answer,
+    },
+  });
 };

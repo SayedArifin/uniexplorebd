@@ -72,6 +72,7 @@ model User {
   Bookmark  Bookmark[]
   Article   Article[]
   Reviews   Review[]
+  question  question[]
 }
 
 model University {
@@ -91,6 +92,7 @@ model University {
   branches            Branch[]
   Reviews             Review[]
   Representative      Representative?
+  question            question[]
 }
 
 model Department {
@@ -190,4 +192,15 @@ model Representative {
   university      University @relation(fields: [universityId], references: [id])
   loggedinEmail   String
   supportingEmail String
+  university_logo String
+}
+
+model question {
+  id           String     @id @default(uuid()) @map("_id")
+  universityId String
+  university   University @relation(fields: [universityId], references: [id])
+  question     String
+  answer       String?
+  userEmail    String
+  user         User       @relation(fields: [userEmail], references: [email])
 }

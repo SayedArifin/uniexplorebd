@@ -4,6 +4,7 @@ import { BiCard, BiLayerPlus } from "react-icons/bi";
 import { BiHome } from "react-icons/bi";
 import { Plus, User } from "lucide-react";
 import { MdFeedback, MdRealEstateAgent } from "react-icons/md";
+import { BsQuestionCircleFill } from "react-icons/bs";
 
 
 export const EditorSidebarItems = [
@@ -27,7 +28,7 @@ export const OwnerSidebarItems = [
 ];
 export const RepresentativeSidebarItems = [
     { icon: <BiHome size={25} />, text: "Home", href: "/representative" },
-    { icon: <User size={25} />, text: "Advertizement", href: "/representative/advertizement" },
+    { icon: <BsQuestionCircleFill size={25} />, text: "Question", href: "/representative/question" },
 
 
 ];
